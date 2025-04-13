@@ -1,15 +1,19 @@
-//Importamos la hoja viajes.js 
-import { registrarDestino, mostrarItinerario } from './viajes';
+import { Viaje } from "./viajes.js"
+import { Transporte, agregarTransportes }  from "./Transportes.js"
+import { Destino, agregarDestinos }  from "./destinos.js"
 
-// Función para iniciar la aplicación
-const iniciarApp = () => {
-    // Ejemplo de cómo registrar destinos
-    registrarDestino("Paris", "2024-06-15", "Avión");
-    registrarDestino("Londres", "2024-07-01", "Tren");
-
-    // Mostrar el itinerario de los viajes
-  mostrarItinerario();
-};
+const iniciarApp = ()=>{
+    agregarTransportes(new Transporte('Jet',300));
+    agregarDestinos(new Destino('Brazil',300));
+    let viajes =[
+        new Viaje("Paris", "2026-01-10", "Avión",2),    
+        new Viaje("Londres", "2025-09-15", "Tren",3),
+        new Viaje("Brazil", "2025-12-01", "Jet",1),
+    ];
+    viajes.forEach(element => {
+        element.mostrarItinerario();
+    });
+}
 
 // Ejecutar la aplicación
-iniciarApp(); 
+iniciarApp();

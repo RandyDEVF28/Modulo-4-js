@@ -1,55 +1,47 @@
-// Creamos Array para los Destinos
-const destinos = [];
+// Array para guardar los destinos
+import { capitalize } from "./formato.js";
+import { transportes } from "./Transportes.js";
+import { destinos } from "./destinos.js";
 
-// Funcion para registrar un destino 
-const registrarDestino = (Destino, Fecha, Transporte) => {
-    // se crea objeto con los datos del viaje 
-    const nuevoViaje = {
-      Destino,
-      Fecha,
-      Transporte,
-      costo: calcularCosto(Destino, Transporte)
-    };
-    destinos.push(nuevoViaje);
-  };
-
-  //CALCULO DEL COSTO DEL VIAJE 
-
-  const calcularCosto = (destino, transporte) => {
-    let costoBase = 0;
-  
-    // Costo base por destino
-    if (destino === "Paris") {
-      costoBase = 900;
-    } else if (destino === "Londres") {
-      costoBase = 1100;
-    } else if (destino === "New York") {
-      costoBase = 700;
+export class Viaje {
+    constructor(destino, fecha, transporte,personas) {
+        this.destino = destino;
+        this.fecha = fecha;
+        this.transporte = transporte;
+        this.personas = personas;
+        this.calcularCosto();
     }
-  
-    // Costo adicional por tipo de transporte
-    if (transporte === "Avión") {
-      costoBase += 200;
-    } else if (transporte === "Tren") {
-      costoBase += 100;
+    calcularCosto() {
+        this.costo = 0;
+
+        const transporte = transportes.find(transp => transp.nombre === this.transporte);
+        const destino = destinos.find(dest => dest.nombre === this.destino);
+        // Costo base por destino
+        if(transporte){
+            this.costo += transporte.costo;
+        }
+        if(destino){
+            this.costo += destino.costo;
+        }
+
+        if(this.personas>3){
+            this.costo = this.costo-(this.costo*0.30);
+        }
+        this.costo *= this.personas;
     }
-  
-    return costoBase;
-  };
 
-
-//ITINERARIO DE VIAJE 
-
-const mostrarItinerario = () => {
-    // Se recorre el arreglo de Destinos y se muestra la info de cada uno 
-    destinos.forEach(viaje => {
-      console.log(`Destino: ${viaje.destino}`);
-      console.log(`Fecha: ${viaje.fecha}`);
-      console.log(`Transporte: ${viaje.transporte}`);
-      console.log(`Costo: $${viaje.costo}`);
-      console.log("---------------------------");
-    });
-  };
-  
-  // Exportamos las funciones para usarlas en otros módulos
-  export { registrarDestino, mostrarItinerario };
+    mostrarItinerario() {
+        let txt = '';
+        for (const propiedad in this) {
+            if (Object.prototype.hasOwnProperty.call(this, propiedad)) {
+                if (propiedad == 'costo') {
+                    txt += `${capitalize(propiedad)}: $${this[propiedad]}\n`
+                } else {
+                    txt += `${capitalize(propiedad)}: ${this[propiedad]}\n`
+                }
+            }
+        }
+        txt += "---------------------------";
+        console.log(txt);
+    }
+}
