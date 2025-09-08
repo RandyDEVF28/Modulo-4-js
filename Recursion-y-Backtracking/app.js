@@ -16,3 +16,10 @@ function findGift(gifts, giftName, index = 0) {
     
     return findGift(gifts, giftName, index + 1);
 }
+
+let giftToFind = "Lego";
+console.log(findGift(gifts, giftToFind));
+
+
+giftToFind = "Camión";
+console.log(findGift(gifts, giftToFind));
