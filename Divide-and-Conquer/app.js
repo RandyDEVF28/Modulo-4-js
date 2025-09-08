@@ -11,3 +11,7 @@ function findMax(arr) {
 
     return leftMax > rightMax ? leftMax : rightMax;
   }
+
+    const numbers = [3, 8, 2, 10, 5, 7];
+  
+  console.log(findMax(numbers));
